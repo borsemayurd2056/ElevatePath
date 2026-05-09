@@ -1,7 +1,7 @@
 import {
   LayoutDashboard, ClipboardList, Map, BookOpen,
   GraduationCap, FileText, TrendingUp, Users, MessageSquare,
-  Calendar, Newspaper, LogOut, Sparkles
+  Calendar, Newspaper, LogOut, Sparkles, PlaySquare
 } from "lucide-react";
 import logoImg from "@/assets/logo.png";
 import { NavLink } from "@/components/NavLink";
@@ -23,6 +23,7 @@ const mainItems = [
   { title: "Entrance Exams", url: "/exams", icon: GraduationCap },
   { title: "Skills & Roadmap", url: "/skills", icon: FileText },
   { title: "Salary Insights", url: "/insights", icon: TrendingUp },
+  { title: "Recommendation Links", url: "/recommendations", icon: PlaySquare },
 ];
 
 const mentorItems = [

@@ -8,11 +8,13 @@ import { toast } from "sonner";
 import { motion } from "framer-motion";
 import logoImg from "@/assets/logo.png";
 import { ArrowLeft } from "lucide-react";
+import { ForgotPasswordDialog } from "@/components/ForgotPasswordDialog";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [forgotOpen, setForgotOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -68,7 +70,16 @@ export default function Login() {
               </motion.div>
 
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-                <Label htmlFor="password">Password</Label>
+                <div className="flex items-center justify-between gap-2">
+                  <Label htmlFor="password">Password</Label>
+                  <button
+                    type="button"
+                    onClick={() => setForgotOpen(true)}
+                    className="text-sm font-medium text-primary hover:text-primary/80 hover:underline"
+                  >
+                    Forgot password?
+                  </button>
+                </div>
                 <div className="mt-2">
                   <Input 
                     id="password" 
@@ -89,6 +100,8 @@ export default function Login() {
               </Button>
             </motion.div>
           </form>
+
+          <ForgotPasswordDialog open={forgotOpen} onOpenChange={setForgotOpen} />
 
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="text-center text-sm text-muted-foreground">
             Don't have an account?{" "}

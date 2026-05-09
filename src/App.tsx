@@ -19,6 +19,7 @@ import Mentors from "./pages/Mentors";
 import AskMentor from "./pages/AskMentor";
 import BookSession from "./pages/BookSession";
 import Resources from "./pages/Resources";
+import Recommendations from "./pages/Recommendations";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -46,6 +47,7 @@ const App = () => (
             <Route path="/ask-mentor" element={<ProtectedRoute><AskMentor /></ProtectedRoute>} />
             <Route path="/book-session" element={<ProtectedRoute><BookSession /></ProtectedRoute>} />
             <Route path="/resources" element={<ProtectedRoute><Resources /></ProtectedRoute>} />
+            <Route path="/recommendations" element={<ProtectedRoute><Recommendations /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
