@@ -21,7 +21,7 @@ import BookSession from "./pages/BookSession";
 import Resources from "./pages/Resources";
 import Recommendations from "./pages/Recommendations";
 import NotFound from "./pages/NotFound";
-
+import { GuruChatbot } from "@/components/GuruChatbot";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -31,6 +31,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
+          <GuruChatbot />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />

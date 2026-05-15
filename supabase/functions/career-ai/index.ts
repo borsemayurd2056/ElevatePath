@@ -9,14 +9,36 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { careers, stage, type } = await req.json();
+    const { careers, stage, type, history } = await req.json();
     const AI_GATEWAY_KEY = Deno.env.get("AI_GATEWAY_KEY");
     if (!AI_GATEWAY_KEY) throw new Error("AI_GATEWAY_KEY is not configured");
 
     let systemPrompt = "";
     let userPrompt = "";
 
-    if (type === "roadmap") {
+    if (type === "quiz") {
+      systemPrompt = `You are a career counselor designing an adaptive psychometric and career interest test for an Indian student. 
+The student's education stage is: ${stage}.
+Generate ONE multiple-choice question to determine their career interests. The question must be adaptive and logically follow their previous answers (if any).
+IMPORTANT: Keep the question very short (1-2 sentences maximum). Keep each option text very short (1 line maximum).
+Return ONLY a valid JSON object in this exact format, with no markdown formatting or backticks:
+{
+  "question": "The short question text here?",
+  "options": [
+    { "label": "Short option 1 text", "value": "opt1", "categories": ["engineering", "it_software"] },
+    { "label": "Short option 2 text", "value": "opt2", "categories": ["medical"] },
+    { "label": "Short option 3 text", "value": "opt3", "categories": ["management"] },
+    { "label": "Short option 4 text", "value": "opt4", "categories": ["skill_based"] }
+  ]
+}
+Valid categories are ONLY: engineering, medical, management, civil_services, defense, it_software, diploma, skill_based. Assign 1 to 3 relevant categories to each option. Provide exactly 4 options.`;
+      
+      let historyText = "No previous questions.";
+      if (history && history.length > 0) {
+        historyText = history.map((h: any, i: number) => `Q${i+1}: ${h.question}\nAnswer: ${h.answer}`).join("\n\n");
+      }
+      userPrompt = `Previous Q&A History:\n${historyText}\n\nGenerate the next question (Question ${history ? history.length + 1 : 1} of 10). Respond ONLY with the raw JSON object, no markdown blocks.`;
+    } else if (type === "roadmap") {
       systemPrompt = "You are a career guidance expert for Indian students. Generate a clear, step-by-step career roadmap. Return a JSON object with: {steps: [{title: string, description: string, duration: string}]}. Keep it practical and specific to the Indian education system.";
       userPrompt = `Generate a career roadmap for becoming a "${careers}" starting from education stage "${stage}". Include 5-7 actionable steps.`;
     } else {

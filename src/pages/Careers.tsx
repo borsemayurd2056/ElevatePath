@@ -29,6 +29,27 @@ interface Career {
   required_skills: string[] | null;
 }
 
+const careerVideoLinks: Record<string, string> = {
+  "business operations manager": "https://www.youtube.com/embed/tOJZ6Q5-WUs",
+  "business operational manager": "https://www.youtube.com/embed/tOJZ6Q5-WUs",
+  "civil servant (ias/ips)": "https://www.youtube.com/embed/jSGkm7dTsH8",
+  "civil servant": "https://www.youtube.com/embed/jSGkm7dTsH8",
+  "computer science engineer": "https://www.youtube.com/embed/MfOtVvg1r2U",
+  "computer science": "https://www.youtube.com/embed/MfOtVvg1r2U",
+  "data scientist": "https://www.youtube.com/embed/9R3X0JoCLyU",
+  "digital marketing strategist": "https://www.youtube.com/embed/h95cQkEWBx0",
+  "digital marketing stratergist": "https://www.youtube.com/embed/h95cQkEWBx0",
+  "full stack developer": "https://www.youtube.com/embed/GxmfcnU3feo",
+  "mechanical engineering": "https://www.youtube.com/embed/AwaVPJJEjAQ",
+  "medical doctor(mbbs)": "https://www.youtube.com/embed/RrKGr3JYCGw",
+  "medical doctor (mbbs)": "https://www.youtube.com/embed/RrKGr3JYCGw",
+  "medical doctor": "https://www.youtube.com/embed/RrKGr3JYCGw",
+  "nda officer": "https://www.youtube.com/embed/xqp7yD7_6mk",
+  "polytchni enguneer": "https://www.youtube.com/embed/lqKsBfYFueQ",
+  "polytechnic engineer": "https://www.youtube.com/embed/lqKsBfYFueQ",
+  "ui/ux designer": "https://www.youtube.com/embed/Q324oRLYhlM",
+};
+
 export default function Careers() {
   const [careers, setCareers] = useState<Career[]>([]);
   const [filter, setFilter] = useState("all");
@@ -132,7 +153,21 @@ export default function Careers() {
                   
                   <div className="pt-4 border-t bg-muted/40 rounded-xl p-5 mt-6">
                      <h4 className="font-semibold mb-2 flex items-center gap-2 text-primary"><Briefcase className="h-5 w-5"/> Next Steps To Achieve This</h4>
-                     <p className="text-sm text-muted-foreground">To get started in this career, take the Career Quiz to see how your current aptitudes align, or visit the Course Finder to discover educational degrees matching this description.</p>
+                     {careerVideoLinks[selectedCareer.title.toLowerCase()] ? (
+                       <div className="mt-4 aspect-video rounded-xl overflow-hidden w-full border shadow-sm">
+                         <iframe 
+                           width="100%" 
+                           height="100%" 
+                           src={careerVideoLinks[selectedCareer.title.toLowerCase()]} 
+                           title="YouTube video player" 
+                           frameBorder="0" 
+                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                           allowFullScreen
+                         ></iframe>
+                       </div>
+                     ) : (
+                       <p className="text-sm text-muted-foreground">Specific next steps and video resources for this career path will be added soon.</p>
+                     )}
                   </div>
                   
                   <div className="flex justify-end pt-2">

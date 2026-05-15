@@ -165,8 +165,21 @@ export const stageQuestions: Record<EducationStage, QuizQuestion[]> = {
   ]
 };
 
+export function formatCategoryName(category: string): string {
+  const names: Record<string, string> = {
+    engineering: "Engineering",
+    medical: "Medical Sciences",
+    management: "Business & Management",
+    civil_services: "Civil Services & Admin",
+    defense: "Defense & Armed Forces",
+    it_software: "IT & Software",
+    diploma: "Technical Diploma",
+    skill_based: "Skill-based & Creative",
+  };
+  return names[category] || category.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
 
-export function calculateDynamicResults(answers: Record<number, string>, stage: EducationStage): { category: string; score: number }[] {
+export function calculateDynamicResults(answers: Record<number, string>, stage: EducationStage, questions: QuizQuestion[] = stageQuestions[stage]): { category: string; score: number }[] {
   const scores: Record<string, number> = {
     engineering: 0,
     medical: 0,
@@ -177,8 +190,6 @@ export function calculateDynamicResults(answers: Record<number, string>, stage: 
     diploma: 0,
     skill_based: 0
   };
-
-  const questions = stageQuestions[stage];
 
   questions.forEach((q) => {
     const answer = answers[q.id];
